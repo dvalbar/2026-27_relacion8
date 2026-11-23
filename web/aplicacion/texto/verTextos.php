@@ -19,14 +19,13 @@ $arrayTextos = [];
 if (isset($_POST["texto"])) {
     $textoNuevo = new RegistroTexto($_POST["texto"]);
 
-    $cadena = $textoNuevo->getCadena(); // Cadena escrita en el input
-    $fecha = $textoNuevo->getFechaHora()->format("d/m/Y"); // 23/11/2026
-    $hora = $textoNuevo->getFechaHora()->format("H:i:s"); // 14:44:38
+    // $cadena = $textoNuevo->getCadena(); // Cadena escrita en el input
+    // $fecha = $textoNuevo->getFechaHora()->format("d/m/Y"); // 23/11/2026
+    // $hora = $textoNuevo->getFechaHora()->format("H:i:s"); // 14:44:38
 
-    $textoFormateado = $cadena . " - " . $fecha . " - " . $hora;
+    // $textoFormateado = $cadena . " - " . $fecha . " - " . $hora;
 
-    $arrayTextos[] = $textoFormateado;
-    echo $textoFormateado;
+    $arrayTextos[] = $textoNuevo; // Guardar el objeto RegistroTexto
 }
 
 //dibuja la plantilla de la vista
