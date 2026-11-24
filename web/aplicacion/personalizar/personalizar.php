@@ -103,7 +103,11 @@ function formulario(): void
         <select name="fondo" id="fondo">
             <?php foreach (COLORESFONDO as $key => $value) {
                 $color = mb_strtoupper($value["nombre"]);
-                echo "<option value = '$key'>$color</option>";
+                if ($key == $_COOKIE['fondo']) {
+                    echo "<option value = '$key' selected>$color</option>";
+                } else {
+                    echo "<option value = '$key'>$color</option>";
+                }
             } ?>
         </select>
         <br>
@@ -111,7 +115,11 @@ function formulario(): void
         <select name="texto" id="texto">
             <?php foreach (COLORESTEXTO as $key => $value) {
                 $color = mb_strtoupper($value["nombre"]);
-                echo "<option value = '$key'>$color</option>";
+                if ($key == $_COOKIE['texto']) {
+                    echo "<option value = '$key' selected>$color</option>";
+                } else {
+                    echo "<option value = '$key'>$color</option>";
+                }
             } ?>
         </select>
         <br><br>
@@ -119,5 +127,3 @@ function formulario(): void
     </form>
 <?php
 }
-
-// TO-DO: Que al seleccionar un color del combo se quede ese color seleccionado
