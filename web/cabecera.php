@@ -54,3 +54,6 @@ const COLORESFONDO = [
     "green" => ["nombre" => "verde", "rgb" => [0, 255, 0]],
     "blue"  => ["nombre" => "azul",   "rgb" => [0, 0, 255]],
 ];
+
+// Abrir la sesión
+session_start();

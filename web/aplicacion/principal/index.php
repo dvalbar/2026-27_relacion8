@@ -29,7 +29,9 @@ function cuerpo() // Añadir aqui las variables
 ?>
     <br>
     <h3>Relación 8.</h3>
-    <a href="../personalizar/index.php">Ir a Página Principal</a> | <a href="../personalizar/personalizar.php">Ir a Personalizar</a>
+    <a href="../personalizar/index.php">Ir a Página Principal</a> | 
+    <a href="../personalizar/personalizar.php">Ir a Personalizar</a> | 
+    <a href="../texto/verTextos.php">Ir a Ver Textos</a>
 <?php
 
 }
