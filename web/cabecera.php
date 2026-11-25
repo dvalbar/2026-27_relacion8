@@ -12,16 +12,23 @@ if (MODO_TRABAJO == "produccion")
 else
     error_reporting(E_ALL);
 
-// Clases
+// Autoloader unificado
 spl_autoload_register(function ($clase) {
-    $ruta = RUTABASE . "/scripts/clases/";
-    $fichero = $ruta . "$clase.php";
+    $rutas = [
+        RUTABASE . '/scripts/clases/',
+        RUTABASE . '/aplicacion/clases/'
+    ];
 
-    if (file_exists($fichero)) {
-        require_once($fichero);
-    } else {
-        throw new Exception("La clase $clase no se ha encontrado.");
+    foreach ($rutas as $ruta) {
+        $fichero = $ruta . $clase . '.php';
+        if (file_exists($fichero)) {
+            require_once($fichero);
+            return; // Detiene la función en cuanto encuentra y carga la clase
+        }
     }
+
+    // Solo lanza la excepción si ha buscado en todas las rutas y no está
+    throw new Exception("La clase $clase no se ha encontrado.");
 });
 
 include(RUTABASE . "/aplicacion/plantilla/plantilla.php");
@@ -29,8 +36,6 @@ include(RUTABASE . "/aplicacion/plantilla/plantilla.php");
 // Creo todos los objetos que necesita mi aplicación
 
 include_once(RUTABASE . "/scripts/librerias/validacion.php");
-
-include_once(RUTABASE . "/aplicacion/clases/RegistroTexto.php"); // Añadir Clase RegistroTexto
 
 // Para consultar los colores posibles se crearán dos constantes (COLORESTEXTO y
 // COLORESFONDO) en cabecera.php. Cada constante contendrá un array de los colores posibles para

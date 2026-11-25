@@ -17,7 +17,7 @@ $barraUbi =
 if (isset($_POST["fondo"])) {
     $indice = $_POST["fondo"];
     if (array_key_exists($indice, COLORESFONDO)) {
-        setcookie("fondo", $indice, 0, "/");
+        setcookie("fondo", $indice, time() + 60 * 60 * 24 * 2, "/");
     }
 }
 
@@ -26,7 +26,7 @@ if (isset($_POST["texto"])) {
     $indice = $_POST["texto"];
 
     if (array_key_exists($indice, COLORESTEXTO)) {
-        setcookie("texto", $indice, 0, "/");
+        setcookie("texto", $indice, time() + 60 * 60 * 24 * 2, "/");
     }
 }
 
@@ -34,14 +34,14 @@ if (isset($_POST["texto"])) {
 if (isset($_COOKIE['fondo'])) {
     $fondo = $_COOKIE['fondo'];
 } else {
-    $fondo = "white";
+    $fondo = "white"; // Por defecto "blanco"
 }
 
 // Color de texto
 if (isset($_COOKIE['texto'])) {
     $texto = $_COOKIE['texto'];
 } else {
-    $texto = "black";
+    $texto = "black"; // Por defecto "negro"
 }
 
 // Recargar la página para actualizar las cookies

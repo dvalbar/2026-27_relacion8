@@ -25,7 +25,7 @@ if (isset($_COOKIE['visitas'])) {
 $contadorVisitas++;
 
 // Y se crea la cookie con el contador como valor
-setcookie("visitas", (string)$contadorVisitas);
+setcookie("visitas", (string)$contadorVisitas, time() + 60 * 60 * 24 * 2, "/");
 
 // Color de fondo
 if (isset($_COOKIE['fondo'])) {

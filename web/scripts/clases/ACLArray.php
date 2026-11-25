@@ -28,22 +28,22 @@
          */
         private $_usuarios=[];
         
-        
-
+        /**
+         * Constructor
+         */
         function __construct()
         {
-            //añade los roles
+            // Añade los roles
             $this->anadirRole("normales",[1=>true]);
             $this->anadirRole("administradores",[1=>true,2=>true]);
             
-            //añade los usuario
-            $this->anadirUsuario("Es usuario alumno","alumno","alum",
+            // Añade los usuario (Usuarios y contraseñas cambiados)
+            $this->anadirUsuario("Es usuario alumno","alumno","alumno",
                                       $this->getCodRole("normales"));
-            $this->anadirUsuario("Es usuario profesor","profesor","profe",
+            $this->anadirUsuario("Es usuario profesor","profesor","profesor",
                                       $this->getCodRole("administradores"));
-            $this->anadirUsuario("Vicente Tejero","vicente","profesor",
+            $this->anadirUsuario("David Valverde","david","david",
                                       $this->getCodRole("administradores"));
-
         }
 
         /**
@@ -55,18 +55,18 @@
          */
         function anadirRole(string $nombre, array $permisos=array()):bool
         {
-            //pongo el nombre en minuscula
+            // Pongo el nombre en minuscula
             $nombre=mb_strtolower($nombre);
             
-            //inicializo un arracon todos los permisos a false
+            // Inicializo un arracon todos los permisos a false
             $per=[1=>false,false,false,false,false,
                     false,false,false,false,false];
 
-            //compruebo si ya existe el role
+            // Compruebo si ya existe el role
             if ($this->getCodRole($nombre)!==false)
                  return false;
             
-            //reviso los permisos
+            // Reviso los permisos
             foreach ($per as $clave=>$val)
             {
                 if (isset($permisos[$clave]))
