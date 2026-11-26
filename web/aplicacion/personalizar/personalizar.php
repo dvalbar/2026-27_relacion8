@@ -2,6 +2,18 @@
 
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 
+// Sin usuario redirecciono al login
+if (!$acceso->hayUsuario()) {
+    header("Location: /aplicacion/acceso/login.php");
+    exit;
+}
+
+// Con usuario pero sin el permiso 1 redirecciono a la página de error
+if (!$acceso->puedePermiso(1)) {
+    paginaError("No tienes permisos para acceder a esta página", []);
+    exit;
+}
+
 //controlador
 $barraUbi =
     [

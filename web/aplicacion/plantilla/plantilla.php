@@ -3,15 +3,14 @@
 function paginaError($mensaje, $barraUbi)
 {
     header("HTTP/1.0 404 $mensaje");
-    inicioCabecera("PRACTICA");
+    inicioCabecera("ERROR DE PERMISOS");
     finCabecera();
-    inicioCuerpo("ERROR");
+    inicioCuerpo("ERROR DE PERMISOS");
     echo "<br />\n";
     echo $mensaje;
     echo "<br />\n";
     echo "<br />\n";
-    echo "<br />\n";
-    echo "<a href='/index.php'>Ir a la pagina principal</a>\n";
+    echo "<a href='/index.php'>← Volver a inicio</a>\n"; // Enlace para poder volver a inicio
 
     finCuerpo();
 }
@@ -82,12 +81,13 @@ function inicioCuerpo(string $cabecera, array $barraUbi = []) // $barraUbi es un
                 <ul>
                     <!-- Inicio la puede ver cualquier persona (incluso si no se ha iniciado sesión) -->
                     <li><a href="/index.php">Inicio</a></li>
+
                     <!-- Cualquier usuario validado puede entrar en estas páginas -->
                     <?php if ($acceso->hayUsuario()) { ?>
-                        <li><a href="/aplicacion/principal/index.php">Página Principal</a></li>
-                        <li><a href="/aplicacion/personalizar/index.php">Página Personalizada</a></li>
-                        <li><a href="/aplicacion/texto/verTextos.php">Ver Textos</a></li>
+                        <li><a href="/aplicacion/personalizar/index.php">Página Principal</a></li>
+                        <li><a href="/aplicacion/texto/verTextos.php">Textos</a></li>
                     <?php } ?>
+
                     <!-- Solo si tiene el permiso 1 puede ir a personalizar -->
                     <?php if ($acceso->puedePermiso(1)) { ?>
                         <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar Página</a></li>

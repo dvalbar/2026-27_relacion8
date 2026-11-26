@@ -2,6 +2,12 @@
 
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 
+// Si no hay usuario validado, mando al login
+if (!$acceso->hayUsuario()) {
+    header("Location: /aplicacion/acceso/login.php");
+    exit;
+}
+
 //controlador
 $barraUbi =
     [

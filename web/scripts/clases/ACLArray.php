@@ -34,18 +34,18 @@ class ACLArray extends ACLBase
     function __construct()
     {
         // Añade los roles
-        $this->anadirRole("normales", [1 => true]);
-        $this->anadirRole("administradores", [1 => true, 2 => true]);
+        $this->anadirRole("normales", []);
+        $this->anadirRole("administradores", [1 => true]);
 
         // Añade los usuario (Usuarios y contraseñas cambiados)
         $this->anadirUsuario(
-            "Es usuario alumno",
+            "Alumno",
             "alumno",
             "alumno",
             $this->getCodRole("normales")
         );
         $this->anadirUsuario(
-            "Es usuario profesor",
+            "Profesor",
             "profesor",
             "profesor",
             $this->getCodRole("administradores")
@@ -55,6 +55,12 @@ class ACLArray extends ACLBase
             "david",
             "david",
             $this->getCodRole("administradores")
+        );
+        $this->anadirUsuario(
+            "Vicente Tejero",
+            "vicente",
+            "vicente",
+            $this->getCodRole("normales")
         );
     }
 
@@ -97,6 +103,7 @@ class ACLArray extends ACLBase
 
         // Busco cual es la ultima clave
         $cont = 0;
+
         foreach ($this->_roles as $clave => $role) {
             if ($role["cod"] > $cont)
                 $cont = $role["cod"];
@@ -124,6 +131,7 @@ class ACLArray extends ACLBase
     {
         // Pongo el nombre en minuscula
         $nombre = mb_strtolower($nombre);
+
         foreach ($this->_roles as $clave => $role) {
             if ($role["nombre"] == $nombre)
                 return $role["cod"];
@@ -203,6 +211,7 @@ class ACLArray extends ACLBase
 
         // Busco cual es el ultimo codigo
         $cont = 0;
+
         foreach ($this->_usuarios as $clave => $usu) {
             if ($usu["cod"] > $cont)
                 $cont = $usu["cod"];

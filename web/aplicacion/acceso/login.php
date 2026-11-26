@@ -13,62 +13,70 @@ $barraUbi =
             "enlace" => "/index.php"
         ],
         [
-            "nombre" => "Login"
+            "nombre" => "Iniciar Sesión"
         ]
     ];
 
+// Array para almacenar los errores del formulario
 $arrayErrores = [];
+
+// Variable que se escribe en el formulario, sirve para
+// guardar el nick si el usuario introduce la contraseña mal
 $nickForm = "";
 
-// Si hay Usuario
+// Si ya hay un usuario (ya se ha iniciado sesión)
 if ($acceso->hayUsuario()) {
-    header("Location: /index.php");
+    header("Location: /index.php"); // Redirigir a index.php
     exit;
 }
 
 // Formulario
 if (isset($_POST["user"]) && isset($_POST["password"])) {
-    $user = mb_trim($_POST["user"]);
+    $user = mb_strtolower(mb_trim($_POST["user"]));
     $password = $_POST["password"];
 
+    $nickForm = $user; // Guardar en la variable para el formulario
+
+    // Si es válido
     if ($acl->esValido($user, $password)) {
         $cod = $acl->getCodUsuario($user);
         $nombre = $acl->getNombre($cod);
         $permisos = $acl->getPermisos($cod);
 
         if ($acceso->registrarUsuario($user, $nombre, $permisos)) {
-            header("Location: /aplicacion/principal/index.php");
+            header("Location: /index.php");
             exit;
         } else {
             $arrayErrores["Login"][] = "No se ha podido iniciar la sesión";
         }
     } else {
+        // Si no es válido, da error
         $arrayErrores["Login"][] = "Credenciales incorrectas";
     }
 }
 
-//dibuja la plantilla de la vista
-inicioCabecera("LOGIN");
+// Dibuja la plantilla de la vista
+inicioCabecera("INICIAR SESIÓN");
 cabecera();
 finCabecera();
-inicioCuerpo("LOGIN", $barraUbi);
+inicioCuerpo("INICIAR SESIÓN", $barraUbi);
 cuerpo($arrayErrores, $nickForm);  //llamo a la vista
 finCuerpo();
 // **********************************************************
 
 
-//vista
+// Vista
 function cabecera() {}
 
-//vista
+// Vista
 function cuerpo(array $arrayErrores, string $nickForm) // Añadir aqui las variables
 {
 ?>
     <br>
-    <h3>Login.</h3>
+    <h3>Inicio de sesión.</h3>
 
     <?php
-    formulario($arrayErrores, $nickForm);
+    formulario($arrayErrores, $nickForm); // Mostrar el formulario
     ?>
 
 <?php
@@ -82,6 +90,7 @@ function cuerpo(array $arrayErrores, string $nickForm) // Añadir aqui las varia
 /**
  * Función que muestra el formulario para iniciar sesión
  * @param array $errores Array con los errores del formulario
+ * @param string $nick Cadena con el nick que ha introducido el usuario (por defecto "")
  * 
  * @return void No devuelve nada
  */

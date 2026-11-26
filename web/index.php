@@ -15,7 +15,7 @@ inicioCabecera("INICIO");
 cabecera();
 finCabecera();
 inicioCuerpo("INICIO", $barraUbi);
-cuerpo();  //llamo a la vista
+cuerpo($acceso);  //llamo a la vista
 finCuerpo();
 // **********************************************************
 
@@ -24,11 +24,27 @@ finCuerpo();
 function cabecera() {}
 
 //vista
-function cuerpo()
+function cuerpo(Acceso $acceso)
 {
 ?>
     <br>
     <h3>Bienvenido.</h3>
-    <p>Página de inicio de la aplicación.</p>
+    <!-- Si no se ha iniciado sesión -->
+    <?php if (!$acceso->hayUsuario()) { ?>
+        <p>Página de inicio de la aplicación.</p>
+        <br>
+    <?php } ?>
+
+    <!-- Si se ha iniciado sesión -->
+    <?php if ($acceso->hayUsuario()) { ?>
+        <a href="/aplicacion/personalizar/index.php">Ir a Página Principal</a><br>
+        <a href="/aplicacion/texto/verTextos.php">Ir a Textos</a><br>
+    <?php } ?>
+
+    <!-- Solo si se ha iniciado sesión con un usuario con permiso 1 -->
+    <?php if ($acceso->puedePermiso(1)) { ?>
+        <a href="/aplicacion/personalizar/personalizar.php">Ir a Personalizar Página</a><br>
+    <?php } ?>
+
 <?php
 }
