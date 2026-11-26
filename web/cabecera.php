@@ -62,3 +62,8 @@ const COLORESFONDO = [
 
 // Abrir la sesión
 session_start();
+
+// Para implementarlo se aconseja crear en el fichero cabecera.php una instancia de ACLArray y
+// otra de Acceso
+$acl = new ACLArray();
+$acceso = new Acceso();

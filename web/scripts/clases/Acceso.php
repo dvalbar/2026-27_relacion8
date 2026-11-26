@@ -39,6 +39,8 @@ class Acceso
         } else {
             $_SESSION["acceso"]["validado"] = false;
         }
+
+        return true;
     }
 
     /**
@@ -110,7 +112,10 @@ class Acceso
      *
      * @return boolean Devuelve true si hay usuario registrado. False en caso contrario
      */
-    public function hayUsuario(): bool {}
+    public function hayUsuario(): bool
+    {
+        return $this->_validado;
+    }
 
     /**
      * Función que devuelve si el usuario registrado tiene o no el permiso indicado
@@ -118,7 +123,18 @@ class Acceso
      * @param integer $numero Numero de permiso a comprobar
      * @return bool Devuelve true si hay usuario registrado y tiene el permiso indicado
      */
-    public function puedePermiso(int $numero): bool {}
+    public function puedePermiso(int $numero): bool
+    {
+        if (!$this->hayUsuario()) {
+            return false;
+        }
+
+        if (!isset($this->_permisos[$numero])) {
+            return false;
+        }
+
+        return $this->_permisos[$numero];
+    }
     
     /*
      * ===========
@@ -131,7 +147,13 @@ class Acceso
      *
      * @return string|false
      */
-    public function getNick(): string|false {}
+    public function getNick(): string|false
+    {
+        if (!$this->hayUsuario())
+            return false;
+
+        return $this->_nick;
+    }
 
     /**
      * Devuelve el nombre del usuario registrado o false si no hay usuario

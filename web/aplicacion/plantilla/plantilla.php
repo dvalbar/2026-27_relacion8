@@ -64,17 +64,35 @@ function inicioCuerpo(string $cabecera, array $barraUbi = []) // $barraUbi es un
                 <h1 id="titulo"><?php echo $cabecera; ?></h1>
             </header>
 
+            <!-- Iniciar sesión -->
             <div id="barraLogin">
-
+                <!-- Si hemos iniciado sesión aparece el Usuario y un enlace para cerrar la sesión -->
+                <?php if ($acceso->hayUsuario()) { ?>
+                    Usuario: <?php echo htmlspecialchars($acceso->getNombre()); ?>
+                    | <a href="/aplicacion/acceso/loggout.php">Cerrar sesión</a>
+                <?php } else { ?>
+                    <!-- Si no hemos iniciado sesión aparece el enlace para iniciar sesión -->
+                    <a href="/aplicacion/acceso/login.php">Iniciar sesión</a>
+                <?php } ?>
             </div>
 
+            <!-- Barra Menú -->
+            <!-- Depende de los permisos del usuario verá o no algunas páginas -->
             <div id="barraMenu">
                 <ul>
-                    <li><a href="/aplicacion/personalizar/index.php">Página Principal</a></li> <!-- Esto se añade a todas las paginas porque es la plantilla -->
-                    <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
-                    <li><a href="/aplicacion/texto/verTextos.php">Ver Textos</a></li>
+                    <!-- Inicio la puede ver cualquier persona (incluso si no se ha iniciado sesión) -->
+                    <li><a href="/index.php">Inicio</a></li>
+                    <!-- Cualquier usuario validado puede entrar en estas páginas -->
+                    <?php if ($acceso->hayUsuario()) { ?>
+                        <li><a href="/aplicacion/principal/index.php">Página Principal</a></li>
+                        <li><a href="/aplicacion/personalizar/index.php">Página Personalizada</a></li>
+                        <li><a href="/aplicacion/texto/verTextos.php">Ver Textos</a></li>
+                    <?php } ?>
+                    <!-- Solo si tiene el permiso 1 puede ir a personalizar -->
+                    <?php if ($acceso->puedePermiso(1)) { ?>
+                        <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar Página</a></li>
+                    <?php } ?>
                 </ul>
-
             </div>
 
             <h4>Barra Ubicación</h4>
