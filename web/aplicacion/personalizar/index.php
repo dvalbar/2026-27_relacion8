@@ -4,6 +4,7 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 // Si no hay usuario validado, mando al login
 if (!$acceso->hayUsuario()) {
+    $_SESSION["destino"] = $_SERVER["REQUEST_URI"];  // Guardo la página que quería ver
     header("Location: /aplicacion/acceso/login.php");
     exit;
 }

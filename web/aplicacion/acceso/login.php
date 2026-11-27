@@ -44,7 +44,16 @@ if (isset($_POST["user"]) && isset($_POST["password"])) {
         $permisos = $acl->getPermisos($cod);
 
         if ($acceso->registrarUsuario($user, $nombre, $permisos)) {
-            header("Location: /index.php");
+            // Por defecto voy al inicio
+            $destino = "/index.php";
+
+            // Si había una página pendiente, voy a ella y la borro de la sesión
+            if (isset($_SESSION["destino"])) {
+                $destino = $_SESSION["destino"];
+                unset($_SESSION["destino"]); // Eliminar la sesión destino
+            }
+
+            header("Location: $destino"); // Redirecciono a la página pendiente o a /index.php
             exit;
         } else {
             $arrayErrores["Login"][] = "No se ha podido iniciar la sesión";
